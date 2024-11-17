@@ -8,14 +8,14 @@ def connect_to_db():
     while True:
         try:
             conn = psycopg2.connect(
-                host="db",
+                host="db.internal",
                 database="mydatabase",
                 user="postgres",
                 password="postgres"
             )
             return conn
-        except psycopg2.OperationalError:
-            print("Database not ready, retrying in 5 seconds...")
+        except psycopg2.OperationalError as e:
+            print(f"Database not ready: {e}. Retrying in 5 seconds...")
             time.sleep(5)
 
 @app.route('/')
